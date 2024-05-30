@@ -1,7 +1,23 @@
+import readline from "readline/promises";
+
 class App {
   constructor() {
+    this.init();
+  }
+
+  init() {
+    this.newLineSymbol = "\r\n";
+    this.initInterface();
     this.getUserName();
     this.sayHi();
+  }
+
+  initInterface() {
+    this.interface = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    this.interface.on("close", () => this.sayGoodbye());
   }
 
   getUserName() {
@@ -16,7 +32,15 @@ class App {
   }
 
   sayHi() {
-    process.stdout.write(`Welcome to the File Manager, ${this.userName}!`);
+    this.interface.write(
+      `Welcome to the File Manager, ${this.userName}!${this.newLineSymbol}`
+    );
+  }
+
+  sayGoodbye() {
+    this.interface.write(
+      `Thank you for using File Manager, ${this.userName}, goodbye!${this.newLineSymbol}`
+    );
   }
 }
 
