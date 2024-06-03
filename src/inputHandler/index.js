@@ -1,11 +1,14 @@
-import { print } from "../utils/print.js";
+import FilesModule from "../files/files.js";
 
 class InputHandler {
-  constructor() {}
+  constructor(interfaceInstance) {
+    this.interface = interfaceInstance;
+    this.filesModule = new FilesModule(this.interface);
+  }
 
   parseInput(string) {
-    print(string);
+    this.filesModule.getFileList();
   }
 }
 
-export default new InputHandler();
+export default InputHandler;
