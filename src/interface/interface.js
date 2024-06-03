@@ -1,12 +1,15 @@
 import readline from "readline/promises";
-import { eol, print } from "../utils/print.js";
-import inputHandler from "../inputHandler/index.js";
+import { eol, print, printTable } from "../utils/print.js";
+import InputHandler from "../inputHandler/index.js";
+import navigation from "../navigation/index.js";
 
 class Interface {
   constructor() {
     this.newLineSymbol = eol;
-    this.inputParser = inputHandler;
+    this.inputParser = new InputHandler(this);
     this.print = print;
+    this.printTable = printTable;
+    this.navigation = navigation;
     this.initInterface();
   }
 
@@ -31,8 +34,13 @@ class Interface {
     }
   }
 
+  afterEach() {
+    this.print(`You are currently in ${this.navigation.getCurrDir()}`);
+  }
+
   sayHi() {
     this.print(`Welcome to the File Manager, ${this.userName}!`);
+    this.afterEach();
   }
 
   sayGoodbye() {
