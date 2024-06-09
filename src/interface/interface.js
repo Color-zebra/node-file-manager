@@ -3,7 +3,7 @@ import { eol, print, printTable } from "../utils/print.js";
 
 class Interface {
   constructor(appInstance) {
-    this.interface = null;
+    this._interface = null;
     this.userName = null;
     this.app = appInstance;
     this.newLineSymbol = eol;
@@ -14,12 +14,18 @@ class Interface {
 
   initInterface() {
     this.getUserName();
-    this.interface = readline.createInterface({
+    this._interface = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
     });
-    this.interface.on("close", () => this.sayGoodbye());
-    this.interface.on("line", (data) => this.app.inputHandler.parseInput(data));
+    this._interface.on("close", () => this.sayGoodbye());
+    this._interface.on("line", (data) =>
+      this.app.inputHandler.parseInput(data)
+    );
+  }
+
+  close() {
+    this._interface.close();
   }
 
   getUserName() {

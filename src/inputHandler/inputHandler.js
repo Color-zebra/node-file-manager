@@ -10,6 +10,12 @@ class InputHandler {
       case "ls":
         this.app.files.getFileList();
         break;
+      case "up":
+        this.app.navigation.up();
+        break;
+      case ".exit":
+        this.app.interface.close();
+        break;
       default:
         this.app.interface.print(INVALID_INPUT);
     }
