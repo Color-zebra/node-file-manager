@@ -78,6 +78,92 @@ class Files {
       this.app.interface.printError();
     }
   }
+
+  async cp(args) {
+    try {
+      const currFilePath = path.resolve(this.app.navigation.currDir, args[0]);
+      const fileName = path.parse(currFilePath).base;
+      const newDirectoryPath = path.resolve(
+        this.app.navigation.currDir,
+        args[1]
+      );
+      const newFilePath = path.resolve(newDirectoryPath, fileName);
+
+      try {
+        await fs.mkdir(newDirectoryPath, { recursive: true });
+      } catch (error) {
+        this.app.interface.printError();
+      }
+
+      const readStream = createReadStream(currFilePath);
+      readStream.on("error", () => {
+        this.app.interface.print(
+          `You should use this command only for existing files`
+        );
+        this.app.interface.printError();
+      });
+
+      const writeStream = createWriteStream(newFilePath, { flags: "wx" });
+      writeStream.on("error", (e) => {
+        this.app.interface.print(`Wrong new path`);
+        this.app.interface.printError();
+      });
+      writeStream.on("finish", () => this.app.interface.afterEach());
+      readStream.pipe(writeStream);
+    } catch (error) {
+      this.app.interface.printError();
+    }
+  }
+
+  async mv(args) {
+    try {
+      const currFilePath = path.resolve(this.app.navigation.currDir, args[0]);
+      const fileName = path.parse(currFilePath).base;
+      const newDirectoryPath = path.resolve(
+        this.app.navigation.currDir,
+        args[1]
+      );
+      const newFilePath = path.resolve(newDirectoryPath, fileName);
+
+      try {
+        await fs.mkdir(newDirectoryPath, { recursive: true });
+      } catch (error) {
+        this.app.interface.printError();
+      }
+
+      const readStream = createReadStream(currFilePath);
+      readStream.on("error", () => {
+        this.app.interface.print(
+          `You should use this command only for existing files`
+        );
+        this.app.interface.printError();
+      });
+
+      const writeStream = createWriteStream(newFilePath, { flags: "wx" });
+      writeStream.on("error", (e) => {
+        this.app.interface.print(`Wrong new path`);
+        this.app.interface.printError();
+      });
+      writeStream.on("finish", () => {
+        fs.rm(currFilePath).then(() => {
+          this.app.interface.afterEach();
+        });
+      });
+      readStream.pipe(writeStream);
+    } catch (error) {
+      this.app.interface.printError();
+    }
+  }
+
+  async rm(args) {
+    try {
+      const filePath = path.resolve(this.app.navigation.currDir, args[0]);
+      await fs.rm(filePath);
+      this.app.interface.afterEach();
+    } catch (error) {
+      this.app.interface.printError();
+    }
+  }
 }
 
 export default Files;

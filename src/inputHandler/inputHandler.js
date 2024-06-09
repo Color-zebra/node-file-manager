@@ -70,6 +70,15 @@ class InputHandler {
       case "rn":
         this.app.files.rn(args);
         break;
+      case "cp":
+        this.app.files.cp(args);
+        break;
+      case "mv":
+        this.app.files.mv(args);
+        break;
+      case "rm":
+        this.app.files.rm(args);
+        break;
       case ".exit":
         this.app.interface.close();
         break;
