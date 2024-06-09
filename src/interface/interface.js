@@ -20,7 +20,7 @@ class Interface {
     });
     this._interface.on("close", () => this.sayGoodbye());
     this._interface.on("line", (data) =>
-      this.app.inputHandler.parseInput(data)
+      this.app.inputHandler.executeInput(data)
     );
   }
 

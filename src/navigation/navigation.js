@@ -28,6 +28,10 @@ class Navigation {
     this.currDir = path.resolve(this.currDir, "..");
     this.app.interface.afterEach();
   }
+
+  cd(str) {
+    const newPath = path.resolve()
+  }
 }
 
 export default Navigation;
