@@ -61,6 +61,15 @@ class InputHandler {
       case "cd":
         this.app.navigation.cd(args);
         break;
+      case "cat":
+        this.app.files.cat(args);
+        break;
+      case "add":
+        this.app.files.add(args);
+        break;
+      case "rn":
+        this.app.files.rn(args);
+        break;
       case ".exit":
         this.app.interface.close();
         break;

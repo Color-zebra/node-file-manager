@@ -1,4 +1,7 @@
 import fs from "fs/promises";
+import { createReadStream, createWriteStream } from "fs";
+import path from "path";
+import { eol } from "../utils/print.js";
 
 class Files {
   constructor(appInstance) {
@@ -31,6 +34,49 @@ class Files {
     }
 
     this.app.interface.afterEach();
+  }
+
+  cat(args) {
+    try {
+      const filePath = path.resolve(this.app.navigation.currDir, args[0]);
+      const readstream = createReadStream(filePath, "utf-8");
+      readstream.pipe(process.stdout);
+      readstream.on("end", () => {
+        this.app.interface.print(eol);
+        this.app.interface.afterEach();
+      });
+      readstream.on("error", () => this.app.interface.printError());
+    } catch (error) {
+      this.app.interface.printError();
+    }
+  }
+
+  async add(args) {
+    try {
+      const filePath = path.resolve(this.app.navigation.currDir, args[0]);
+      await fs.writeFile(filePath, "", { flag: "wx" });
+      this.app.interface.afterEach();
+    } catch (error) {
+      this.app.interface.printError();
+    }
+  }
+
+  async rn(args) {
+    try {
+      const oldFilePath = path.resolve(this.app.navigation.currDir, args[0]);
+      const newFilePath = path.resolve(oldFilePath, "..", args[1]);
+
+      try {
+        await fs.access(newFilePath);
+        this.app.interface.print(`File with such name already exist`);
+        this.app.interface.printError();
+      } catch {
+        await fs.rename(oldFilePath, newFilePath);
+        this.app.interface.afterEach();
+      }
+    } catch (error) {
+      this.app.interface.printError();
+    }
   }
 }
 
