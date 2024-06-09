@@ -1,8 +1,10 @@
 import os from "os";
-import path from "path";
 
 class Navigation {
-  constructor() {
+  constructor(appInstance) {
+    this.app = appInstance;
+    this.baseDir = null;
+    this.currDir = null;
     this.init();
   }
 
@@ -20,4 +22,4 @@ class Navigation {
   }
 }
 
-export default new Navigation();
+export default Navigation;

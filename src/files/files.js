@@ -1,18 +1,14 @@
-import navigation from "../navigation/index.js";
 import fs from "fs/promises";
-import { printTable } from "../utils/print.js";
 import { OPERATION_ERROR_MSG } from "../vars/messages.js";
 
 class Files {
-  constructor(interfaceInstance) {
-    this.navigation = navigation;
-    this.interface = interfaceInstance;
-    this.getFileList();
+  constructor(appInstance) {
+    this.app = appInstance;
   }
 
   async getFileList() {
     try {
-      let list = await fs.readdir(this.navigation.getCurrDir(), {
+      let list = await fs.readdir(this.app.navigation.getCurrDir(), {
         withFileTypes: true,
       });
       let files = [];
@@ -30,12 +26,12 @@ class Files {
       dirs = dirs.sort().map((item) => ({ Name: item, Type: "directory" }));
 
       const res = [...dirs, ...files];
-      this.interface.printTable(res);
+      this.app.interface.printTable(res);
     } catch (error) {
-      this.interface.print(OPERATION_ERROR_MSG);
+      this.app.interface.print(OPERATION_ERROR_MSG);
     }
 
-    this.interface.afterEach();
+    this.app.interface.afterEach();
   }
 }
 

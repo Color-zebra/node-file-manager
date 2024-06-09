@@ -1,15 +1,14 @@
 import readline from "readline/promises";
 import { eol, print, printTable } from "../utils/print.js";
-import InputHandler from "../inputHandler/index.js";
-import navigation from "../navigation/index.js";
 
 class Interface {
-  constructor() {
+  constructor(appInstance) {
+    this.interface = null;
+    this.userName = null;
+    this.app = appInstance;
     this.newLineSymbol = eol;
-    this.inputParser = new InputHandler(this);
     this.print = print;
     this.printTable = printTable;
-    this.navigation = navigation;
     this.initInterface();
   }
 
@@ -20,7 +19,7 @@ class Interface {
       output: process.stdout,
     });
     this.interface.on("close", () => this.sayGoodbye());
-    this.interface.on("line", (data) => this.inputParser.parseInput(data));
+    this.interface.on("line", (data) => this.app.inputHandler.parseInput(data));
   }
 
   getUserName() {
@@ -35,7 +34,7 @@ class Interface {
   }
 
   afterEach() {
-    this.print(`You are currently in ${this.navigation.getCurrDir()}`);
+    this.print(`You are currently in ${this.app.navigation.getCurrDir()}`);
   }
 
   sayHi() {
@@ -48,4 +47,4 @@ class Interface {
   }
 }
 
-export default new Interface();
+export default Interface;
