@@ -1,5 +1,6 @@
 import os from "os";
 import path from "path";
+import fs from "fs/promises";
 
 class Navigation {
   constructor(appInstance) {
@@ -29,8 +30,19 @@ class Navigation {
     this.app.interface.afterEach();
   }
 
-  cd(str) {
-    const newPath = path.resolve()
+  async cd(args) {
+    try {
+      const newPath = path.resolve(this.currDir, args[0]);
+      const pathStat = await fs.stat(newPath);
+      if (!pathStat.isDirectory()) {
+        this.app.interface.print("There is no such directory");
+        this.app.interface.afterEach();
+      }
+      this.currDir = newPath;
+      this.app.interface.afterEach();
+    } catch (error) {
+      this.app.interface.printError();
+    }
   }
 }
 

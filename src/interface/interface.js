@@ -1,5 +1,6 @@
 import readline from "readline/promises";
 import { eol, print, printTable } from "../utils/print.js";
+import { OPERATION_ERROR_MSG } from "../vars/messages.js";
 
 class Interface {
   constructor(appInstance) {
@@ -41,6 +42,11 @@ class Interface {
 
   afterEach() {
     this.print(`You are currently in ${this.app.navigation.getCurrDir()}`);
+  }
+
+  printError() {
+    this.print(OPERATION_ERROR_MSG);
+    this.afterEach();
   }
 
   sayHi() {

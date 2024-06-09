@@ -1,5 +1,4 @@
 import fs from "fs/promises";
-import { OPERATION_ERROR_MSG } from "../vars/messages.js";
 
 class Files {
   constructor(appInstance) {
@@ -28,7 +27,7 @@ class Files {
       const res = [...dirs, ...files];
       this.app.interface.printTable(res);
     } catch (error) {
-      this.app.interface.print(OPERATION_ERROR_MSG);
+      this.app.interface.printError();
     }
 
     this.app.interface.afterEach();

@@ -58,6 +58,9 @@ class InputHandler {
       case "up":
         this.app.navigation.up();
         break;
+      case "cd":
+        this.app.navigation.cd(args);
+        break;
       case ".exit":
         this.app.interface.close();
         break;
