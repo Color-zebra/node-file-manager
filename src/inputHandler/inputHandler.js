@@ -82,6 +82,9 @@ class InputHandler {
       case "os":
         this.app.os.os(args);
         break;
+      case "hash":
+        this.app.hash.calcHash(args);
+        break;
       case ".exit":
         this.app.interface.close();
         break;

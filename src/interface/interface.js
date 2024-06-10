@@ -29,6 +29,14 @@ class Interface {
     this._interface.close();
   }
 
+  pause() {
+    this._interface.pause();
+  }
+
+  resume() {
+    this._interface.resume();
+  }
+
   getUserName() {
     const possibleName = process.argv.slice(2)[0];
 
