@@ -1,4 +1,3 @@
-import { OPERATION_ERROR_MSG } from "../vars/messages.js";
 import path from "path";
 import crypto from "crypto";
 import { createReadStream } from "fs";
@@ -25,13 +24,13 @@ class Hash {
       });
       readStream.on("error", () => {
         this.app.interface.resume();
-        this.app.interface.print(OPERATION_ERROR_MSG);
+        this.app.interface.printError();
       });
 
       readStream.pipe(hash);
     } catch (e) {
       this.app.interface.resume();
-      this.app.interface.print(OPERATION_ERROR_MSG);
+      this.app.interface.printError();
     }
   }
 }

@@ -85,6 +85,12 @@ class InputHandler {
       case "hash":
         this.app.hash.calcHash(args);
         break;
+      case "compress":
+        this.app.compress.compress(args);
+        break;
+      case "decompress":
+        this.app.compress.decompress(args);
+        break;
       case ".exit":
         this.app.interface.close();
         break;

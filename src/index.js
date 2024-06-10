@@ -4,6 +4,7 @@ import Navigation from "./navigation/navigation.js";
 import InputHandler from "./inputHandler/inputHandler.js";
 import Os from "./os/os.js";
 import Hash from "./hash/hash.js";
+import Compress from "./compress/compress.js";
 
 class App {
   constructor() {
@@ -13,6 +14,7 @@ class App {
     this.navigation = new Navigation(this);
     this.os = new Os(this);
     this.hash = new Hash(this);
+    this.compress = new Compress(this);
     this.init();
   }
 
