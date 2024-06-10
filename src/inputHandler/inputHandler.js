@@ -79,6 +79,9 @@ class InputHandler {
       case "rm":
         this.app.files.rm(args);
         break;
+      case "os":
+        this.app.os.os(args);
+        break;
       case ".exit":
         this.app.interface.close();
         break;
